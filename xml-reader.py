@@ -46,7 +46,7 @@ def retrieval_pubmed_book_article(documents):
     collection_list = []
     ''' PubmedBookArticle type data'''
     for child_of_root in documents.iterfind('PubmedBookArticle/BookDocument'):
-        tmp_list = []
+        tmp_list = list()
         # print(child_of_root.find('ArticleTitle').text)
         tmp_list.append(child_of_root.find('ArticleTitle').text)  ## ArticleTitle
         # print(child_of_root.find('Abstract/AbstractText'))
@@ -64,7 +64,7 @@ def retrieval_pubmed_article(documents):
     collection_list = []
     ''' PubmedArticle type data'''
     for child_of_root in documents.iterfind('PubmedArticle/MedlineCitation/Article'):
-        tmp_list = []
+        tmp_list = list()
         # print(child_of_root.find('ArticleTitle').text)
         tmp_list.append(child_of_root.find('ArticleTitle').text)  ## ArticleTitle
         # print(child_of_root.findall('Abstract/AbstractText'))  ## Abstract
