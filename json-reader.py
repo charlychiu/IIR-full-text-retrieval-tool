@@ -27,7 +27,7 @@ def twitter_json_parser(file_path):
 
 if __name__ == "__main__":
     # read_json_file('./Tweet_Json.json')
-    result = twitter_json_parser('./twitter_3.json')
+    result = twitter_json_parser('./Tweet_Json.json')
     result = zip(*result)
     print(list(result))
     # print(result[0]['id'])
