@@ -18,6 +18,8 @@
     <!-- Main styles for this application-->
     <link href="{% static 'searchEngine/css/style.min.css' %}" rel="stylesheet">
     <link href="{% static 'searchEngine/vendors/pace-progress/css/pace.min.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
 
 </head>
 
@@ -95,5 +97,11 @@
 <script src="{% static 'searchEngine/vendors/chart.js/js/Chart.min.js' %}"></script>
 <script src="{% static 'searchEngine/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js' %}"></script>
 <script src="{% static 'searchEngine/js/main.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+{% block js %}
+{% endblock %}
+{% block javascript %}
+{% endblock %}
 </body>
 </html>

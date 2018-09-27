@@ -23,7 +23,7 @@ def load_file(request):
     get_file_name = ""
     context = ""
     if request.method == 'POST':
-        get_file_name = request.POST['selected_file']
+        get_file_name = request.POST.getlist('selected_file')
         context = get_file_name
 
     return render(request, 'searchEngine/index.html', {'file_list': [get_file_name], 'context': context})
