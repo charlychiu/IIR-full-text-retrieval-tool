@@ -33,12 +33,12 @@ def count_string_of_word(context, type):
     return sum_word
 
 
-
 def count_string_of_sentence(context, type):
     # running model
     return 0  # number of sentence
 
-def add_keyword_dict(context ,type ,keyword_dict, context_collection):
+
+def add_keyword_dict(context, type, keyword_dict, title_conllection, context_collection):
     result = zip(*context)
     result_list = list(result)
 
