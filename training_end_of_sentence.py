@@ -22,13 +22,14 @@ def load_data(test_split=0.2):
     X_test = np.array(df['text'].values[train_size:])
     y_test = np.array(df['label'].values[train_size:])
 
-    token = Tokenizer(num_words=30, filters='')
+
+    token = Tokenizer(filters='')
     token.fit_on_texts(X_train)
     # convert text to vector
     x_train_seq = token.texts_to_sequences(X_train)
     x_test_seq = token.texts_to_sequences(X_test)
     # padding
-    MAX_LEN_OF_TOKEN = 20
+    MAX_LEN_OF_TOKEN = 50
     x_train = sequence.pad_sequences(x_train_seq, maxlen=MAX_LEN_OF_TOKEN)
     x_test = sequence.pad_sequences(x_test_seq, maxlen=MAX_LEN_OF_TOKEN)
 
@@ -39,16 +40,12 @@ def create_model(input_length):
     print('Creating model...')
     model = Sequential()
     model.add(Embedding(output_dim=32,
-                        input_dim=2000,
-                        input_length=20))
-    model.add(Dropout(0.2))
-    '''Drop 20% neuron during training '''
+                        input_dim=50,
+                        input_length=input_length))
     model.add(Flatten())
-    model.add(Dense(units=256, activation='tanh'))
-    ''' Total 256 neuron in hidden layers'''
-    model.add(Dropout(0.35))
+    model.add(Dense(units=256, activation='relu'))
     model.add(Dense(units=1, activation='sigmoid'))
-    ''' Define output layer with 'sigmoid activation' '''
+
     print('Compiling...')
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
@@ -60,6 +57,7 @@ def create_model(input_length):
 X_train, y_train, X_test, y_test = load_data()
 
 model = create_model(len(X_train[0]))
+model.save('eos_model.h5')
 
 print('Fitting model...')
 
