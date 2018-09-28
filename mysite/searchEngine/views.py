@@ -3,8 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from .forms import UploadFileForm
-from .file import save_file_from_post
-from .file import read_file_in_upload_folder
+from .file import save_file_from_post, read_file_in_upload_folder, get_file_info
 
 
 def upload_file(request):
@@ -23,8 +22,9 @@ def load_file(request):
     get_file_name = ""
     context = ""
     if request.method == 'POST':
-        get_file_name = request.POST.getlist('selected_file')
-        context = get_file_name
+        get_file_name = request.POST.getlist('selected_file[]')
+        context = get_file_info(get_file_name)
+        # context = get_file_name
 
     return render(request, 'searchEngine/index.html', {'file_list': [get_file_name], 'context': context})
 
@@ -33,6 +33,8 @@ def index(request):
     file_list = read_file_in_upload_folder()
     context = ''
     return render(request, 'searchEngine/index.html', {'file_list': file_list, 'context': context})
+
+
 
 
 def detail(request, question_id):

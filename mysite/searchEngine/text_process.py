@@ -31,13 +31,31 @@ def count_string_of_word(context, type):
             sum_word += len(i.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split())
 
     return sum_word
-    # words = context.split()
-    # return len(words)
-    return 0
+
 
 
 def count_string_of_sentence(context, type):
     # running model
     return 0  # number of sentence
 
-# def create_word_dict()
+def add_keyword_dict(context ,type ,keyword_dict, context_collection):
+    result = zip(*context)
+    result_list = list(result)
+
+    if type == 'twitter':
+        for i in result_list[1]:
+            context_collection.append(i)
+            word_split = i.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split()
+            for word in word_split:
+                if not word.isdigit():
+                    keyword_map = keyword_dict.get(word, list())
+                    keyword_map.append(len(context_collection) - 1)
+                    keyword_dict[word] = keyword_map
+    if type == 'pubmed':
+        # for i in result_list[0]:
+        #     sum_word += len(i.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split())
+        # for i in result_list[1]:
+        #     sum_word += len(i.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split())
+        pass
+
+    return keyword_dict, context_collection
