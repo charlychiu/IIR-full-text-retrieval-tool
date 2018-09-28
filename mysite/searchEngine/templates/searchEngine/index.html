@@ -72,7 +72,6 @@
             <div class="card">
                 <div class="card-header">Result</div>
                 <div class="card-body">
-{#                    {% for element in context %}#}
                     <label class="col-md-3">Characters: {{ context.0.0 }}</label>
                     <label class="col-md-3">Words: {{ context.0.1 }}</label>
                     <label class="col-md-3">Sentences: {{ context.0.2 }}</label>
@@ -93,20 +92,21 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
+                            <th width="10px">index</th>
                             <th>Article</th>
                             <th>Abstract</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>qweqwqweqweqweqwe</td>
-                            <td>
-                                qweqwqweqweqweqweqweqwqweqweqweqweqweqwqweqweqweqweqweqwqweqweqweqweqweqwqweqweqweqweqweqwqweqweqweqwe
-                            </td>
-                        </tr>
+                        {% for title, abstract in context.2 %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ title }}</td>
+                                <td>{{ abstract }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
-{#                    {% endfor %}#}
                 </div>
             </div>
 

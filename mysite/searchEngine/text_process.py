@@ -38,14 +38,15 @@ def count_string_of_sentence(context, type):
     return 0  # number of sentence
 
 
-def add_keyword_dict(context, type, keyword_dict, title_conllection, context_collection):
+def add_keyword_dict(context, type, keyword_dict, title_collection, context_collection):
     result = zip(*context)
     result_list = list(result)
 
     if type == 'twitter':
-        for i in result_list[1]:
-            context_collection.append(i)
-            word_split = i.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split()
+        for idx, val in enumerate(result_list[1]):
+            context_collection.append(val)
+            title_collection.append(result_list[0][idx])
+            word_split = val.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split()
             for word in word_split:
                 if not word.isdigit():
                     keyword_map = keyword_dict.get(word, list())
@@ -58,4 +59,4 @@ def add_keyword_dict(context, type, keyword_dict, title_conllection, context_col
         #     sum_word += len(i.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split())
         pass
 
-    return keyword_dict, context_collection
+    return keyword_dict, title_collection, context_collection
