@@ -3,7 +3,7 @@ from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
-from keras.models import Sequential
+from keras.models import Sequential, load_model
 import pandas as pd
 import numpy as np
 
@@ -22,7 +22,6 @@ def load_data(test_split=0.2):
     X_test = np.array(df['text'].values[train_size:])
     y_test = np.array(df['label'].values[train_size:])
 
-
     token = Tokenizer(filters='')
     token.fit_on_texts(X_train)
     # convert text to vector
@@ -39,11 +38,14 @@ def load_data(test_split=0.2):
 def create_model(input_length):
     print('Creating model...')
     model = Sequential()
-    model.add(Embedding(output_dim=32,
-                        input_dim=50,
-                        input_length=input_length))
-    model.add(Flatten())
-    model.add(Dense(units=256, activation='relu'))
+    # model.add(Embedding(output_dim=32,
+    #                     input_dim=50,
+    #                     input_length=input_length))
+    # model.add(Flatten())
+
+    model.add(Dense(units=512, activation='relu'))
+    model.add(Dropout(0.4))
+    model.add(Dense(units=32, activation='relu'))
     model.add(Dense(units=1, activation='sigmoid'))
 
     print('Compiling...')
@@ -53,24 +55,23 @@ def create_model(input_length):
     return model
 
 
-
 X_train, y_train, X_test, y_test = load_data()
 
 model = create_model(len(X_train[0]))
-model.save('eos_model.h5')
 
 print('Fitting model...')
 
-hist = model.fit(X_train, y_train, batch_size=16, epochs=10, validation_split=0.1, verbose=2)
-
-score, acc = model.evaluate(X_test, y_test, batch_size=1)
-print('Test score:', score)
-print('Test accuracy:', acc)
-
-
-predict_classes = model.predict_classes(X_test).reshape(-1)
-print("")
-labelDict = {1: 'true', 0: 'false'}
-i = 2
-print('Ground truth: {}; prediction result: {}'.format(labelDict[y_test[i]], labelDict[predict_classes[i]]))
-
+model.fit(X_train, y_train, batch_size=128, epochs=30, validation_split=0.1, verbose=2)
+model.save('eos_model.h5')  # HDF5
+#
+# score, acc = model.evaluate(X_test, y_test, batch_size=1)
+# print('Test score:', score)
+# print('Test accuracy:', acc)
+#
+# del model
+# model = load_model('eos_model.h5')
+#
+# predict_classes = model.predict_classes(X_test).reshape(-1)
+# labelDict = {1: 'true', 0: 'false'}
+# i = 2
+# print('Ground truth: {}; prediction result: {}'.format(labelDict[y_test[i]], labelDict[predict_classes[i]]))
