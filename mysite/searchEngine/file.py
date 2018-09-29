@@ -1,4 +1,4 @@
-from os import listdir, path
+from os import listdir, path, remove
 from os.path import isfile, join
 from .text_process import count_string_of_character, count_string_of_word, count_string_of_sentence, add_keyword_dict
 from .json_reader import twitter_json_parser
@@ -18,7 +18,7 @@ def save_file_from_post(file):
 
 
 def read_file_in_upload_folder():
-    return [f for f in listdir('upload') if isfile(join('upload', f))]
+    return [f for f in listdir('upload') if isfile(join('upload', f)) if f != '.gitignore']
 
 
 # def md5_file(file):
@@ -31,8 +31,9 @@ def read_file_in_upload_folder():
 
 def file_list_with_md5(file_list):
     hash_obj = hashlib.md5(open(get_file_path(file_list[0]), 'rb').read())
-    for fname in file_list[1:]:
-        hash_obj.update(open(get_file_path(fname), 'rb').read())
+    if len(file_list) > 1:
+        for fname in file_list[1:]:
+            hash_obj.update(open(get_file_path(fname), 'rb').read())
     checksum = hash_obj.hexdigest()
     return checksum
 
@@ -65,6 +66,20 @@ def save_file_info_to_tmp_pkl(file_list, data):
             fh.close()
 
 
+def clean_tmp_pkl():
+    file_list = [f for f in listdir('tmp') if isfile(join('tmp', f))]
+    for file_name in file_list:
+        if path.exists('tmp/' + file_name) and file_name != ".gitignore":
+            remove('tmp/' + file_name)
+
+
+def clean_upload_file():
+    file_list = [f for f in listdir('upload') if isfile(join('upload', f))]
+    for file_name in file_list:
+        if path.exists('upload/' + file_name) and file_name != ".gitignore":
+            remove('upload/' + file_name)
+
+
 def get_file_info(file_list):  # [[character, word, sentence], dict{}]
     file_info_list = list()
     counting_info_list = list()
@@ -92,6 +107,9 @@ def get_file_info(file_list):  # [[character, word, sentence], dict{}]
                 counting_info_list.append(
                     [count_string_of_character(get_file, 'pubmed'), count_string_of_word(get_file, 'pubmed'),
                      count_string_of_sentence(get_file, 'pubmed')])
+                keyword_dict, title_collection, context_collection = add_keyword_dict(get_file, 'pubmed', keyword_dict,
+                                                                                      title_collection,
+                                                                                      context_collection)
             else:
                 counting_info_list.append("QQ")
 

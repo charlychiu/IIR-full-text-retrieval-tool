@@ -18,7 +18,7 @@
     <!-- Main styles for this application-->
     <link href="{% static 'searchEngine/css/style.min.css' %}" rel="stylesheet">
     <link href="{% static 'searchEngine/vendors/pace-progress/css/pace.min.css' %}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 
 
 </head>
@@ -38,30 +38,12 @@
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
-                <li class="nav-title">Project 1</li>
-                <li class="nav-item nav-dropdown">
-                    <a class="nav-link nav-dropdown-toggle" href="#">
-                        <i class="nav-icon icon-star"></i> Icons</a>
-                    <ul class="nav-dropdown-items">
-                        <li class="nav-item">
-                            <a class="nav-link" href="icons/coreui-icons.html">
-                                <i class="nav-icon icon-star"></i> CoreUI Icons
-                                <span class="badge badge-success">NEW</span>
-                            </a>
-                            <a class="nav-link" href="icons/flags.html">
-                                <i class="nav-icon icon-star"></i> Flags</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="icons/font-awesome.html">
-                                <i class="nav-icon icon-star"></i> Font Awesome
-                                <span class="badge badge-secondary">4.7</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="icons/simple-line-icons.html">
-                                <i class="nav-icon icon-star"></i> Simple Line Icons</a>
-                        </li>
-                    </ul>
+                <li class="nav-title">full text search</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'searchEngine:index' %}">
+                        <i class="nav-icon icon-speedometer"></i> Dashboard
+                        <span class="badge badge-info">HOME</span>
+                    </a>
                 </li>
 
             </ul>

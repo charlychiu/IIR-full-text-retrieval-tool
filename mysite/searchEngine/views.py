@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from .forms import UploadFileForm
-from .file import save_file_from_post, read_file_in_upload_folder, get_file_info
+from .file import save_file_from_post, read_file_in_upload_folder, get_file_info, clean_tmp_pkl, clean_upload_file
 
 
 def upload_file(request):
@@ -12,8 +12,6 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             save_file_from_post(request.FILES['file_input'])
-            # return HttpResponseRedirect('/searchEngine')
-            # return HttpResponseRedirect(reverse('searchEngine:upload'))  # best way redirect
 
     return HttpResponseRedirect(reverse('searchEngine:index'))
 
@@ -29,12 +27,20 @@ def load_file(request):
     return render(request, 'searchEngine/index.html', {'file_list': [get_file_name], 'context': context})
 
 
+def clean_pkl_cache(request):
+    clean_tmp_pkl()
+    return HttpResponseRedirect(reverse('searchEngine:index'))
+
+
+def clean_upload_cache(request):
+    clean_upload_file()
+    return HttpResponseRedirect(reverse('searchEngine:index'))
+
+
 def index(request):
     file_list = read_file_in_upload_folder()
     context = ''
     return render(request, 'searchEngine/index.html', {'file_list': file_list, 'context': context})
-
-
 
 
 def detail(request, question_id):
