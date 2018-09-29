@@ -1,6 +1,7 @@
 from keras.models import load_model
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
+from keras import backend
 import pandas as pd
 import numpy as np
 
@@ -56,6 +57,7 @@ def model_predict_end_of_sentence(processed_text_list):
     list_seq = token.texts_to_sequences(processed_text_list)
     list_seq_with_padding = sequence.pad_sequences(list_seq, maxlen=20)
     predict_result = model.predict_classes(list_seq_with_padding).reshape(-1)
+    backend.clear_session()
     return predict_result
 
 
