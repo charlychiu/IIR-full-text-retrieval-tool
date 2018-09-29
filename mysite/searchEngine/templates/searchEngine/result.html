@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+{% block title %}result{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>Article</th>
+                            <th>Abstract</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for title, abstract in result_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ title }}</td>
+                                <td>{{ abstract }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

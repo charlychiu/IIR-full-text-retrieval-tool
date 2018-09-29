@@ -1,6 +1,7 @@
 from os import listdir, path, remove
 from os.path import isfile, join
-from .text_process import count_string_of_character, count_string_of_word, count_string_of_sentence, add_keyword_dict
+from .text_process import count_string_of_character, count_string_of_word, count_string_of_sentence, add_keyword_dict, \
+    look_up_keyword
 from .json_reader import twitter_json_parser
 from .xml_reader import pubmed_xml_parser
 import pickle
@@ -49,7 +50,7 @@ def check_tmp_pkl_exist(file_list):
 def load_file_info_from_tmp_pkl(file_list):
     name_of_tmp_pkl = file_list_with_md5(file_list)
     fh = open("tmp/" + str(name_of_tmp_pkl) + ".pkl", 'rb')
-    return pickle.load(fh)
+    return pickle.load(fh), name_of_tmp_pkl
 
 
 def save_file_info_to_tmp_pkl(file_list, data):
@@ -64,6 +65,13 @@ def save_file_info_to_tmp_pkl(file_list, data):
     finally:
         if fh is not None:
             fh.close()
+            return name_of_tmp_pkl
+
+
+def search_from_tmp_pkl(pkl_id, keyword):
+    fh = open("tmp/" + str(pkl_id) + ".pkl", 'rb')
+    file_info_list = pickle.load(fh)
+    return look_up_keyword(file_info_list[1], file_info_list[2], keyword)
 
 
 def clean_tmp_pkl():
@@ -88,7 +96,8 @@ def get_file_info(file_list):  # [[character, word, sentence], dict{}]
     context_collection = list()
 
     if check_tmp_pkl_exist(file_list):
-        file_info_list = load_file_info_from_tmp_pkl(file_list)
+        file_info_list, pkl_name = load_file_info_from_tmp_pkl(file_list)
+        file_info_list.append(pkl_name)
         file_info_list.append("load from pkl")
         return file_info_list
     else:
@@ -116,7 +125,8 @@ def get_file_info(file_list):  # [[character, word, sentence], dict{}]
         file_info_list.append(counting_info_list)
         file_info_list.append(keyword_dict)
         file_info_list.append(list(zip(title_collection, context_collection)))
-        save_file_info_to_tmp_pkl(file_list, file_info_list)
+        pkl_name = save_file_info_to_tmp_pkl(file_list, file_info_list) or ""
+        file_info_list.append(pkl_name)
         file_info_list.append("save to pkl")
 
         return file_info_list

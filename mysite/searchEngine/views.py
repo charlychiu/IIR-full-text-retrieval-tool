@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from .forms import UploadFileForm
-from .file import save_file_from_post, read_file_in_upload_folder, get_file_info, clean_tmp_pkl, clean_upload_file
+from .file import save_file_from_post, read_file_in_upload_folder, get_file_info, clean_tmp_pkl, clean_upload_file, \
+    search_from_tmp_pkl
 
 
 def upload_file(request):
@@ -35,6 +36,12 @@ def clean_pkl_cache(request):
 def clean_upload_cache(request):
     clean_upload_file()
     return HttpResponseRedirect(reverse('searchEngine:index'))
+
+
+def search_keyword(request, pkl_id):
+    keyword = request.POST['search_keyword']
+    result_list = search_from_tmp_pkl(pkl_id, str.strip(keyword))
+    return render(request, 'searchEngine/result.html', {'result_list': result_list, 'context': ''})
 
 
 def index(request):

@@ -65,22 +65,33 @@
             <div class="card">
                 <div class="card-header">Result</div>
                 <div class="card-body">
-                    <label class="col-md-3">Characters: {{ context.0.0 }}</label>
-                    <label class="col-md-3">Words: {{ context.0.1 }}</label>
-                    <label class="col-md-3">Sentences: {{ context.0.2 }}</label>
 
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class="input-group">
+                    {% for character ,word, sentence in context.0 %}
+                        <div class="row">
+                            <label class="col-2">Index: {{ forloop.counter }}</label>
+                            <label class="col-2">Characters: {{ character }}</label>
+                            <label class="col-2">Words: {{ word }}</label>
+                            <label class="">Sentences: {{ sentence }}</label>
+                        </div>
+                    {% endfor %}
+
+
+                    <form action="{% if context %}{% url 'searchEngine:search_keyword' context.3 %}{% endif %}"
+                          method="post" target="_blank">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group">
                                 <span class="input-group-prepend">
-                                    <button class="btn btn-primary" type="button"><i
+                                    <button class="btn btn-primary" type="submit"><i
                                             class="fa fa-search"></i> Search</button>
                                 </span>
-                                <input class="form-control" id="input1-group2" type="text" name="input1-group2"
-                                       placeholder="Keyword">
+                                    <input class="form-control" id="input1-group2" type="text" name="search_keyword"
+                                           placeholder="Keyword">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
                     <table class="table table-bordered">
                         <thead>

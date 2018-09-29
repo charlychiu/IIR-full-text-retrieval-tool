@@ -70,3 +70,15 @@ def add_keyword_dict(context, type, keyword_dict, title_collection, context_coll
                     keyword_dict[word] = keyword_map
 
     return keyword_dict, title_collection, context_collection
+
+
+def look_up_keyword(lookup_dict, title_context_pair, keyword_to_search):
+    result_list = list()
+    if keyword_to_search != '':
+        match_index = lookup_dict[keyword_to_search]
+        # handle same word repeat index
+        for each_index in list(set(match_index)):
+            result_list.append(title_context_pair[each_index])
+        return result_list
+    else:
+        return result_list
