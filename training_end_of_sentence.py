@@ -28,7 +28,7 @@ def load_data(test_split=0.2):
     x_train_seq = token.texts_to_sequences(X_train)
     x_test_seq = token.texts_to_sequences(X_test)
     # padding
-    MAX_LEN_OF_TOKEN = 50
+    MAX_LEN_OF_TOKEN = 20
     x_train = sequence.pad_sequences(x_train_seq, maxlen=MAX_LEN_OF_TOKEN)
     x_test = sequence.pad_sequences(x_test_seq, maxlen=MAX_LEN_OF_TOKEN)
 

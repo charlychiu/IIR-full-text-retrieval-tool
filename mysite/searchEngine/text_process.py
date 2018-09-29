@@ -1,3 +1,10 @@
+from keras.models import load_model
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing import sequence
+import pandas as pd
+import numpy as np
+
+
 # all type context input like: [['article', 'abstract']]
 
 
@@ -33,9 +40,39 @@ def count_string_of_word(context, type):
     return sum_word
 
 
+def cutting_sentence_of_dot(sentence):
+    length = 20
+    cutting_result_list = list()
+    for idx in range(length, len(sentence) - length):
+        if sentence[idx] == ".":
+            cutting_result_list.append(sentence[idx - length:idx + length])
+    return cutting_result_list
+
+
+def model_predict_end_of_sentence(processed_text_list):
+    model = load_model('eos_model.h5')
+    token = Tokenizer(filters='')
+    token.fit_on_texts(processed_text_list)
+    list_seq = token.texts_to_sequences(processed_text_list)
+    list_seq_with_padding = sequence.pad_sequences(list_seq, maxlen=20)
+    predict_result = model.predict_classes(list_seq_with_padding).reshape(-1)
+    return predict_result
+
+
 def count_string_of_sentence(context, type):
-    # running model
-    return 0  # number of sentence
+    result = zip(*context)
+    result_list = list(result)
+    sum_sentence = 0
+    if type == 'twitter':
+        for i in result_list[1]:
+            processed_text_list = cutting_sentence_of_dot(i)
+            predict_result = model_predict_end_of_sentence(processed_text_list)
+            sum_sentence += np.count_nonzero(predict_result == 1)
+
+    if type == 'pubmed':
+        pass
+
+    return sum_sentence
 
 
 def add_keyword_dict(context, type, keyword_dict, title_collection, context_collection):
@@ -57,7 +94,8 @@ def add_keyword_dict(context, type, keyword_dict, title_collection, context_coll
             title_collection.append(val[0])
             context_collection.append(val[1])
             title_word_split = val[0].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).lower().split()
-            context_word_split = val[1].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).lower().split()
+            context_word_split = val[1].translate(
+                {ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).lower().split()
             for word in title_word_split:
                 if not word.isdigit():
                     keyword_map = keyword_dict.get(word, list())
