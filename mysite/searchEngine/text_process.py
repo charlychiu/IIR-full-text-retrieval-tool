@@ -66,11 +66,20 @@ def count_string_of_sentence(context, type):
     if type == 'twitter':
         for i in result_list[1]:
             processed_text_list = cutting_sentence_of_dot(i)
-            predict_result = model_predict_end_of_sentence(processed_text_list)
-            sum_sentence += np.count_nonzero(predict_result == 1)
+            if len(processed_text_list) == 0:
+                sum_sentence += 1
+            else:
+                predict_result = model_predict_end_of_sentence(processed_text_list)
+                sum_sentence += np.count_nonzero(predict_result == 1)
 
     if type == 'pubmed':
-        pass
+        for i in result_list[1]:
+            processed_text_list = cutting_sentence_of_dot(i)
+            if len(processed_text_list) == 0:
+                sum_sentence += 1
+            else:
+                predict_result = model_predict_end_of_sentence(processed_text_list)
+                sum_sentence += np.count_nonzero(predict_result == 1)
 
     return sum_sentence
 
@@ -113,7 +122,9 @@ def add_keyword_dict(context, type, keyword_dict, title_collection, context_coll
 def look_up_keyword(lookup_dict, title_context_pair, keyword_to_search):
     result_list = list()
     if keyword_to_search != '':
-        match_index = lookup_dict[keyword_to_search]
+        match_index = lookup_dict.get(keyword_to_search, -1)
+        if match_index == -1:
+            return result_list
         # handle same word repeat index
         for each_index in list(set(match_index)):
             result_list.append(title_context_pair[each_index])

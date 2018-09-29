@@ -41,48 +41,51 @@
                 </div>
             </div>
 
+            {% if request.path != '/searchEngine/load' %}
 
-            <div class="card">
-                <form enctype="multipart/form-data" action="{% url 'searchEngine:upload' %}" method="post">
-                    {% csrf_token %}
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="file-input">File input</label>
-                            <input class="form-control col-md-9" id="file_input" type="file" name="file_input">
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-                            Submit
-                        </button>
-                        <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="card">
-                <form action="{% url 'searchEngine:load' %}" method="post">
-                    {% csrf_token %}
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
-                            <div class="col-md-9">
-                                <select class="form-control" id="select1" name="selected_file[]" multiple>
-                                    {% for file in file_list %}
-                                        <option value="{{ file }}">{{ file }}</option>
-                                    {% endfor %}
-                                </select>
+                <div class="card">
+                    <form enctype="multipart/form-data" action="{% url 'searchEngine:upload' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="file-input">File input</label>
+                                <input class="form-control col-md-9" id="file_input" type="file" name="file_input">
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-                            Submit
-                        </button>
-                        <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
-                    </div>
-                </form>
-            </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+                                Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <form action="{% url 'searchEngine:load' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="select1" name="selected_file[]" multiple>
+                                        {% for file in file_list %}
+                                            <option value="{{ file }}">{{ file }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+                                Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                        </div>
+                    </form>
+                </div>
+
+            {% endif %}
 
             <div class="card">
                 <div class="card-header">Result</div>
