@@ -46,7 +46,7 @@ def add_keyword_dict(context, type, keyword_dict, title_collection, context_coll
         for idx, val in enumerate(result_list[1]):
             context_collection.append(val)
             title_collection.append(result_list[0][idx])
-            word_split = val.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split()
+            word_split = val.translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).lower().split()
             for word in word_split:
                 if not word.isdigit():
                     keyword_map = keyword_dict.get(word, list())
@@ -56,8 +56,8 @@ def add_keyword_dict(context, type, keyword_dict, title_collection, context_coll
         for val in context:
             title_collection.append(val[0])
             context_collection.append(val[1])
-            title_word_split = val[0].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split()
-            context_word_split = val[1].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).split()
+            title_word_split = val[0].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).lower().split()
+            context_word_split = val[1].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}).lower().split()
             for word in title_word_split:
                 if not word.isdigit():
                     keyword_map = keyword_dict.get(word, list())

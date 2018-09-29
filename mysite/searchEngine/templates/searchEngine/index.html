@@ -16,9 +16,31 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            <div class="row">
-                {{ context }}
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> System Log
+                </div>
+                <div class="card-body">
+                    <div id="accordion" role="tablist">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo"
+                                       aria-expanded="false" aria-controls="collapseTwo">Local variable</a>
+                                </h5>
+                            </div>
+                            <div class="collapse" id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo"
+                                 data-parent="#accordion" style="">
+                                <div class="card-body">
+                                    {{ context }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div class="card">
                 <form enctype="multipart/form-data" action="{% url 'searchEngine:upload' %}" method="post">

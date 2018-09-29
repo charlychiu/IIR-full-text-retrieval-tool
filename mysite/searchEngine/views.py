@@ -40,7 +40,7 @@ def clean_upload_cache(request):
 
 def search_keyword(request, pkl_id):
     keyword = request.POST['search_keyword']
-    result_list = search_from_tmp_pkl(pkl_id, str.strip(keyword))
+    result_list = search_from_tmp_pkl(pkl_id, str.strip(keyword).lower())
     return render(request, 'searchEngine/result.html', {'result_list': result_list, 'context': ''})
 
 
