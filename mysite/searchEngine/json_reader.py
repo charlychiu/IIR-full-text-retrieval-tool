@@ -14,15 +14,15 @@ def data_handling(data):
     try:  # read json is only one
         # print(data['id'])
         tmp_list = list()
-        tmp_list.append(data['id'])
-        tmp_list.append(data['text'])
+        tmp_list.append(data['ID'])
+        tmp_list.append(data['Text'])
         collection_list.append(tmp_list)
     except:  # or read json data set
         # print(data[0]['id'])
         for msg in data:
             tmp_list = list()
-            tmp_list.append(msg['id'])
-            tmp_list.append(msg['text'])
+            tmp_list.append(msg['ID'])
+            tmp_list.append(msg['Text'])
             collection_list.append(tmp_list)
 
     return collection_list

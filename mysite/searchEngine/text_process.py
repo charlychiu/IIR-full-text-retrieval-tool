@@ -52,10 +52,10 @@ def cutting_sentence_of_dot(sentence):
 
 def model_predict_end_of_sentence(processed_text_list):
     model = load_model('eos_model.h5')
-    token = Tokenizer(filters='')
+    token = Tokenizer(filters='', char_level=True)
     token.fit_on_texts(processed_text_list)
     list_seq = token.texts_to_sequences(processed_text_list)
-    list_seq_with_padding = sequence.pad_sequences(list_seq, maxlen=20)
+    list_seq_with_padding = sequence.pad_sequences(list_seq, maxlen=40)
     predict_result = model.predict_classes(list_seq_with_padding).reshape(-1)
     backend.clear_session()
     return predict_result
