@@ -41,23 +41,11 @@ def clean_upload_cache(request):
 def search_keyword(request, pkl_id):
     keyword = request.POST['search_keyword']
     result_list = search_from_tmp_pkl(pkl_id, str.strip(keyword).lower())
-    return render(request, 'searchEngine/result.html', {'result_list': result_list, 'context': ''})
+    return render(request, 'searchEngine/result.html',
+                  {'result_list': result_list, 'context': '', 'keyword': str.strip(keyword)})
 
 
 def index(request):
     file_list = read_file_in_upload_folder()
     context = ''
     return render(request, 'searchEngine/index.html', {'file_list': file_list, 'context': context})
-
-
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
-
-
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
-
-
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)

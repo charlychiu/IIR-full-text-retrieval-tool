@@ -12,10 +12,4 @@ urlpatterns = [
     path('clean_upload_cache', views.clean_upload_cache, name='clean_upload_cache'),
     path('search/<str:pkl_id>', views.search_keyword, name='search_keyword'),
 
-    # ex: /polls/5/
-    path('<int:question_id>/', views.detail, name='detail'),
-    # ex: /polls/5/results/
-    path('<int:question_id>/results/', views.results, name='results'),
-    # ex: /polls/5/vote/
-    path('<int:question_id>/vote/', views.vote, name='vote'),
 ]

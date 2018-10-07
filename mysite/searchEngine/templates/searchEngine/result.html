@@ -1,4 +1,5 @@
 {% extends "master.html" %}
+{% load filters %}
 {% block title %}result{% endblock %}
 {% block content %}
     <div class="container-fluid">
@@ -17,8 +18,28 @@
                         {% for title, abstract in result_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ title }}</td>
-                                <td>{{ abstract }}</td>
+                                <td>
+                                    {% with title|split:" " as words %}
+                                        {% for word in words %}
+                                            {% if word|lower == keyword|lower %}
+                                                <strong>{{ word }}</strong>
+                                            {% else %}
+                                                {{ word }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endwith %}
+                                </td>
+                                <td>
+                                    {% with abstract|split:" " as words %}
+                                        {% for word in words %}
+                                            {% if word|lower == keyword|lower %}
+                                                <strong>{{ word }}</strong>
+                                            {% else %}
+                                                {{ word }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endwith %}
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
