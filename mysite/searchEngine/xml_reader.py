@@ -1,9 +1,24 @@
 import xml.etree.ElementTree as ET
 import os.path
+import re
+
+
+def handle_special_tag(file_path):
+    input_file = open(file_path, encoding="utf-8")
+    xml_contents = input_file.read()
+    input_file.close()
+    output_file = open(file_path + "-backup", "w", encoding="utf-8")
+    output_file.write(xml_contents)
+    output_file.close()
+    xml_contents = re.sub('<sup>.*?</sup>', ' ', xml_contents)
+    output_file = open(file_path, "w", encoding="utf-8")
+    output_file.write(xml_contents)
+    output_file.close()
 
 
 def read_xml_file(file_path):
     if os.path.isfile(file_path):
+        handle_special_tag(file_path)
         get_xml_tree = ET.parse(file_path)
         print("xml-reader: Detect root element tag: {}".format(get_xml_tree.getroot().tag))
         return get_xml_tree
