@@ -11,13 +11,13 @@
     <meta name="keyword" content="">
     <title>searchEngine | {% block title %}{% endblock %}</title>
     <!-- Icons-->
-    <link href="{% static 'searchEngine/vendors/@coreui/icons/css/coreui-icons.min.css' %}" rel="stylesheet">
-    <link href="{% static 'searchEngine/vendors/flag-icon-css/css/flag-icon.min.css' %}" rel="stylesheet">
-    <link href="{% static 'searchEngine/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    <link href="{% static 'searchEngine/vendors/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'Dashboard/vendors/@coreui/icons/css/coreui-icons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Dashboard/vendors/flag-icon-css/css/flag-icon.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Dashboard/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Dashboard/vendors/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet">
     <!-- Main styles for this application-->
-    <link href="{% static 'searchEngine/css/style.min.css' %}" rel="stylesheet">
-    <link href="{% static 'searchEngine/vendors/pace-progress/css/pace.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Dashboard/css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Dashboard/vendors/pace-progress/css/pace.min.css' %}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 
 
@@ -39,11 +39,20 @@
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
-                <li class="nav-title">full text search</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'searchEngine:index' %}">
+                    <a class="nav-link" href="{% url 'Dashboard:index' %}">
                         <i class="nav-icon icon-speedometer"></i> Dashboard
                         <span class="badge badge-info">HOME</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'searchEngine:index' %}">
+                        <i class="nav-icon icon-speedometer"></i> searchEngine
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'zipfDistribution:index' %}">
+                        <i class="nav-icon icon-speedometer"></i> zipfDistribution
                     </a>
                 </li>
 
@@ -70,16 +79,16 @@
     </div>
 </footer>
 <!-- CoreUI and necessary plugins-->
-<script src="{% static 'searchEngine/vendors/jquery/js/jquery.min.js' %}"></script>
-<script src="{% static 'searchEngine/vendors/popper.js/js/popper.min.js' %}"></script>
-<script src="{% static 'searchEngine/vendors/bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'searchEngine/vendors/pace-progress/js/pace.min.js' %}"></script>
-<script src="{% static 'searchEngine/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js' %}"></script>
-<script src="{% static 'searchEngine/vendors/@coreui/coreui/js/coreui.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/jquery/js/jquery.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/popper.js/js/popper.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/pace-progress/js/pace.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/@coreui/coreui/js/coreui.min.js' %}"></script>
 <!-- Plugins and scripts required by this view-->
-<script src="{% static 'searchEngine/vendors/chart.js/js/Chart.min.js' %}"></script>
-<script src="{% static 'searchEngine/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js' %}"></script>
-<script src="{% static 'searchEngine/js/main.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/chart.js/js/Chart.min.js' %}"></script>
+<script src="{% static 'Dashboard/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js' %}"></script>
+<script src="{% static 'Dashboard/js/main.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 {% block js %}
