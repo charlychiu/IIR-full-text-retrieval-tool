@@ -1,0 +1,88 @@
+{% extends "master.html" %}
+{% block title %}index{% endblock %}
+{% block content %}
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">zipfDistribution</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="card">
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="select1" name="selected_file[]" multiple>
+                                    {% for file in file_list %}
+                                        <option value="{{ file }}">{{ file }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+                            Submit
+                        </button>
+                        <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Porter's algorithm
+                <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#porter" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="porter">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Inverse document frequency
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#idf" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="idf">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Zipf Distribution
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#zipf" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="zipf">
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#select1').select2();
+        });
+    </script>
+{% endblock %}
