@@ -437,13 +437,12 @@ def filter_pubmed_data_through_porter(document_set):
 def convert_sentence_through_porter(sentence):
     result_list = list()
     p = PorterStemmer()
-    while 1:
-        output = ''
-        word = ''
-        if sentence == '':
-            break
+
+    output = ''
+    word = ''
+    if sentence is not None:
         for c in sentence:
-            print(c)
+            # print(c)
             if c.isalpha():
                 word += c.lower()
             else:
@@ -453,7 +452,7 @@ def convert_sentence_through_porter(sentence):
                 output += c.lower()
 
             result_list.append(output)
-        break
+
     return ' '.join(result_list)
 
 
