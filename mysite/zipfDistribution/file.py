@@ -4,7 +4,7 @@ from .json_reader import twitter_json_parser
 from .xml_reader import pubmed_xml_parser
 import pickle
 import hashlib
-from .PorterStemmer import get_porter_algorithm_result
+from .PorterStemmer import filter_pubmed_data_through_porter
 
 
 def get_file_path(file_name):
@@ -22,9 +22,8 @@ def get_porter_result(file_list):
             pass
         elif ".xml" in file.lower():
             get_file = pubmed_xml_parser(get_file_path(file))
-            result = get_porter_algorithm_result(get_file)
+            result = filter_pubmed_data_through_porter(get_file)
             return result
             pass
         else:
             pass
-
