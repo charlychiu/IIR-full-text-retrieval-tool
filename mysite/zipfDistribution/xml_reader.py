@@ -18,7 +18,7 @@ def handle_special_tag(file_path):
 
 def read_xml_file(file_path):
     if os.path.isfile(file_path):
-        handle_special_tag(file_path)
+        # handle_special_tag(file_path)
         get_xml_tree = ET.parse(file_path)
         print("xml-reader: Detect root element tag: {}".format(get_xml_tree.getroot().tag))
         return get_xml_tree

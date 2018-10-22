@@ -343,6 +343,27 @@ class PorterStemmer:
         self.step5()
         return self.b[self.k0:self.k+1]
 
+def get_porter_algorithm_result(file):
+    p = PorterStemmer()
+    result_list = list()
+    infile = open(file, 'r')
+    while 1:
+        output = ''
+        word = ''
+        line = infile.readline()
+        if line == '':
+            break
+        for c in line:
+            if c.isalpha():
+                word += c.lower()
+            else:
+                if word:
+                    output += p.stem(word, 0, len(word) - 1)
+                    word = ''
+                output += c.lower()
+        result_list.append(output)
+    infile.close()
+    return result_list
 
 if __name__ == '__main__':
     p = PorterStemmer()

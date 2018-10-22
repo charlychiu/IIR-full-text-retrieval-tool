@@ -13,7 +13,31 @@
         <div class="animated fadeIn">
 
             <div class="card">
-                <form action="#" method="post">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> System Log
+                </div>
+                <div class="card-body">
+                    <div id="accordion" role="tablist">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo"
+                                       aria-expanded="false" aria-controls="collapseTwo">Local variable</a>
+                                </h5>
+                            </div>
+                            <div class="collapse" id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo"
+                                 data-parent="#accordion" style="">
+                                <div class="card-body">
+                                    {{ context }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <form action="{% url 'zipfDistribution:load' %}" method="post">
                     {% csrf_token %}
                     <div class="card-body">
                         <div class="form-group row">
@@ -38,7 +62,7 @@
 
             <div class="card">
                 <div class="card-header">Porter's algorithm
-                <div class="card-header-actions">
+                    <div class="card-header-actions">
                         <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
                            data-target="#porter" aria-expanded="true">
                             <i class="icon-arrow-up"></i>
