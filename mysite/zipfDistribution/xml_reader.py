@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import os.path
 import re
+from multiprocessing import Process, Pool
 
 
 # For handing special tag, like HTML element in XML tag => cause error
@@ -56,8 +57,18 @@ def full_text_search_in_xml(xml_tree, *args):
                     print('xml-reader: arg. error')
         else:
             print('xml-reader: arg. PubmedBookArticle & PubmedArticle')
-            collection_list.extend(retrieval_pubmed_book_article(documents))
-            collection_list.extend(retrieval_pubmed_article(documents))
+            # Write in multiprocess
+            pool = Pool(processes=10)
+            process_result_list = list()
+            process_result_list.append(pool.apply_async(retrieval_pubmed_book_article, args=(documents,)))
+            process_result_list.append(pool.apply_async(retrieval_pubmed_article, args=(documents,)))
+            pool.close()
+            pool.join()
+            for i in process_result_list:
+                collection_list.extend(i.get())
+            # Original Way
+            # collection_list.extend(retrieval_pubmed_book_article(documents))
+            # collection_list.extend(retrieval_pubmed_article(documents))
 
         return collection_list
     else:
@@ -70,36 +81,22 @@ def retrieval_pubmed_book_article(documents):
     ''' PubmedBookArticle type data'''
     for child_of_root in documents.iterfind('PubmedBookArticle/BookDocument'):
         tmp_list = list()
-        # print(child_of_root.find('ArticleTitle').text)
         try:
             tmp_list.append(child_of_root.find('ArticleTitle').text)  ## ArticleTitle
         except:
-            pass
-        # try:
-        #     tmp_list.append(child_of_root.find('Book/BookTitle').text)  ## Book/BookTitle
-        # except:
-        #     pass
-
-        # print(child_of_root.find('Abstract/AbstractText'))
+            print('xml-reader: arg. PubmedBookArticle => ArticleTitle not found')
+            continue
         tmp_list.append(child_of_root.find('Abstract/AbstractText').text)  ## AbstractText
         collection_list.append(tmp_list)
-
-    # for child_of_root in documents.iterfind('PubmedBookArticle/BookDocument/ArticleTitle'):
-    #     print("tag: {}, text: {}".format(child_of_root.tag, child_of_root.text))
-    # for child_of_root in documents.iterfind('PubmedBookArticle/BookDocument/Abstract/AbstractText'):
-    #     print("tag: {}, text: {}".format(child_of_root.tag, child_of_root.text))
     return collection_list
 
 
 def retrieval_pubmed_article(documents):
-    collection_list = []
+    collection_list = list()
     ''' PubmedArticle type data'''
     for child_of_root in documents.iterfind('PubmedArticle/MedlineCitation/Article'):
         tmp_list = list()
-        # print(child_of_root.find('ArticleTitle').text)
         tmp_list.append(child_of_root.find('ArticleTitle').text)  ## ArticleTitle
-        # print(child_of_root.findall('Abstract/AbstractText'))  ## Abstract
-
         abstract_texts = child_of_root.findall('Abstract/AbstractText')
         tmp_str = ''
         for abstract_text in abstract_texts:
@@ -107,28 +104,20 @@ def retrieval_pubmed_article(documents):
                 tmp_str += abstract_text.text + ' '
             except:
                 pass
-        # print(tmp_str)
         tmp_list.append(tmp_str)
         collection_list.append(tmp_list)
     return collection_list
 
 
+# Arg. (optional) accept pubmed type
 def pubmed_xml_parser(file_path, *args):
     get_tree = read_xml_file(file_path)
     parse_result = full_text_search_in_xml(get_tree, *args)
     return parse_result
 
 
+# For debug use
 if __name__ == "__main__":
-    #     # For debug use
-    #     # print("xml-reader: error usage")
-    #     # result = pubmed_xml_parser('./pubmed_result.xml', 'PubmedBookArticle')
     result = pubmed_xml_parser('../upload/pubmed_result_ebola.xml')
-    print(result)
+    # print(result)
     print(len(result))
-#
-#     print("!!")
-#     print(len(result))
-#     # print(get_result[0])
-#     # print(get_result[1])
-#     # print(get_result[2])
