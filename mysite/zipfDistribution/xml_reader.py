@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 import os.path
 import re
 from multiprocessing import Process, Pool
+import time
 
 
 # For handing special tag, like HTML element in XML tag => cause error
@@ -58,17 +59,22 @@ def full_text_search_in_xml(xml_tree, *args):
         else:
             print('xml-reader: arg. PubmedBookArticle & PubmedArticle')
             # Write in multiprocess
-            pool = Pool(processes=10)
-            process_result_list = list()
-            process_result_list.append(pool.apply_async(retrieval_pubmed_book_article, args=(documents,)))
-            process_result_list.append(pool.apply_async(retrieval_pubmed_article, args=(documents,)))
-            pool.close()
-            pool.join()
-            for i in process_result_list:
-                collection_list.extend(i.get())
+            start = time.time()
+            # pool = Pool(processes=2)
+            # process_result_list = list()
+            # process_result_list.append(pool.apply_async(retrieval_pubmed_book_article, args=(documents,)))
+            # process_result_list.append(pool.apply_async(retrieval_pubmed_article, args=(documents,)))
+            # pool.close()
+            # pool.join()
+            # for i in process_result_list:
+            #     collection_list.extend(i.get())
+
             # Original Way
-            # collection_list.extend(retrieval_pubmed_book_article(documents))
-            # collection_list.extend(retrieval_pubmed_article(documents))
+            collection_list.extend(retrieval_pubmed_book_article(documents))
+            collection_list.extend(retrieval_pubmed_article(documents))
+            end = time.time()
+            elapsed = end - start
+            print(elapsed)
 
         return collection_list
     else:
