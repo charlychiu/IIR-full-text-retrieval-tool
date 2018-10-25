@@ -451,7 +451,7 @@ def convert_sentence_through_porter(sentence):
                     word = ''
                 output += c.lower()
 
-            result_list.append(output)
+        result_list.append(output)
 
     return ' '.join(result_list)
 

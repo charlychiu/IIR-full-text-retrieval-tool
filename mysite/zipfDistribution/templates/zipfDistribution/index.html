@@ -36,28 +36,62 @@
                 </div>
             </div>
 
-            <div class="card">
-                <form action="{% url 'zipfDistribution:load' %}" method="post">
-                    {% csrf_token %}
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
-                            <div class="col-md-9">
-                                <select class="form-control" id="select1" name="selected_file[]" multiple>
-                                    {% for file in file_list %}
-                                        <option value="{{ file }}">{{ file }}</option>
-                                    {% endfor %}
-                                </select>
+            {% if request.path != '/zipfDistribution/load' %}
+
+                <div class="card">
+                    <form action="{% url 'zipfDistribution:load' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="select1" name="selected_file[]" multiple>
+                                        {% for file in file_list %}
+                                            <option value="{{ file }}">{{ file }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+                                Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header">Data set
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-                            Submit
-                        </button>
-                        <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
-                    </div>
-                </form>
+                </div>
+                <div class="card-body collapse show" id="dataset">
+                    <table class="table table-responsive-sm table-striped">
+                        <thead>
+                        <tr>
+                            <th class="w-25">Title</th>
+                            <th class="w-25">Abstract</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for document in document_list %}
+                            {% if document.is_raw == 1 %}
+                                <tr>
+                                    <td>{{ document.title }}</td>
+                                    <td>{{ document.abstract }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="card">
@@ -70,6 +104,24 @@
                     </div>
                 </div>
                 <div class="card-body collapse show" id="porter">
+                    <table class="table table-responsive-sm table-striped">
+                        <thead>
+                        <tr>
+                            <th class="w-25">Title</th>
+                            <th class="w-25">Abstract</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for document in document_list %}
+                            {% if document.is_raw == 0 %}
+                                <tr>
+                                    <td>{{ document.title }}</td>
+                                    <td>{{ document.abstract }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

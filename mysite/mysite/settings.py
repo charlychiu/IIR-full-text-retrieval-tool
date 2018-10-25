@@ -80,9 +80,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ir_hw',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'USER': 'iir',
+        'PASSWORD': 'iir_5757',
+        'HOST': '140.116.247.183',
         'PORT': '3306',
     }
 }
