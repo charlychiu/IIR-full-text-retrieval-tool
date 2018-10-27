@@ -5,6 +5,7 @@ from .file import read_file_in_upload_folder, file_set_generate_md5_checksum, ge
 from .models import *
 from .PorterStemmer import convert_sentence_through_porter
 from .queries import *
+from .tfidf import *
 
 
 def index(request):
@@ -24,6 +25,8 @@ def load_file(request):
             document = file_set.get()
             raw_collection = get_content_is_raw_by_document(document)
             porter_collection = get_content_not_raw_by_document(document)
+            # generated_raw_reverted_index(raw_collection)
+            generated_porter_reverted_index(porter_collection)
         else:
             content_collection = get_documents_from_file_set(get_file_name_set)
             document = Document.objects.create(checksum=checksum)
@@ -43,6 +46,8 @@ def load_file(request):
             print('finish: saved to DB')
             raw_collection = get_content_is_raw_by_document(document)
             porter_collection = get_content_not_raw_by_document(document)
+            # generated_raw_reverted_index(raw_collection)
+            generated_porter_reverted_index(porter_collection)
 
     return render(request, 'zipfDistribution/index.html',
                   {'raw_collection': raw_collection, 'porter_collection': porter_collection})
