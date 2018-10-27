@@ -4,3 +4,7 @@ def get_content_is_raw_by_document(document):
 
 def get_content_not_raw_by_document(document):
     return document.contents.all().filter(is_raw=False)
+
+
+def get_objects_count(model):
+    return model.objects.count()

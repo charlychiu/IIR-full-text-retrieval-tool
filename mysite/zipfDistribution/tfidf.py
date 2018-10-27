@@ -1,4 +1,6 @@
 from .models import *
+import nltk
+import operator
 
 
 def generated_raw_reverted_index(content_collection):
@@ -29,4 +31,16 @@ def generated_porter_reverted_index(content_collection):
                 porterIndex = PorterIndex.objects.get(word=word)
                 porterIndex.contents.add(content)
                 # print('TDIDF: Append new porter index to word')
-    pass
+
+
+def get_edit_distance(keyword, model):
+    words = model.objects.values_list('word', flat=True)
+    result = {}
+    for word in words:
+        ed = nltk.edit_distance(keyword, word)
+        result[word] = ed
+    result = sorted(result.items(), key=operator.itemgetter(1))
+    if result[0] == 0:
+        return result[0]
+    else:
+        return result[:5]

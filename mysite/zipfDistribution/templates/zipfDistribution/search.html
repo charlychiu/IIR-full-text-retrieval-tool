@@ -1,0 +1,70 @@
+{% extends "master.html" %}
+{% block title %}zipfDistribution - search{% endblock %}
+{% block content %}
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">zipfDistribution</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    Search (Match/Partial match)
+                </div>
+                <div class="card-body">
+
+                    <form action="{% if context %}{% url 'zipfDistribution:search' %}{% endif %}"
+                          method="post">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <button class="btn btn-primary" type="submit"><i
+                                            class="fa fa-search"></i> Search</button>
+                                </span>
+                                    <input class="form-control" id="input1-group2" type="text" name="search_keyword"
+                                           placeholder="Keyword">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="card">
+                        <div class="card-header">
+                            Raw
+                        </div>
+                        <div class="card-body">
+                            {% for raw_result_word in raw_result %}
+                                <a href="{% url 'zipfDistribution:result' raw_result_word.0 1 %}" target="_blank">
+                                    {{ raw_result_word.0 }}
+                                </a>
+                                <br/>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            Porter
+                        </div>
+
+                        <div class="card-body">
+                            {% for porter_result_word in porter_result %}
+                                <a href="{% url 'zipfDistribution:result' porter_result_word.0 2 %}" target="_blank">
+                                    {{ porter_result_word.0 }}
+                                </a>
+                                <br/>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
