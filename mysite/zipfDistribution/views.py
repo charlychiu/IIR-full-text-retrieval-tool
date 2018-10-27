@@ -2,8 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .file import read_file_in_upload_folder, file_set_generate_md5_checksum, get_documents_from_file_set
-from .models import Document, Content
+from .models import *
 from .PorterStemmer import convert_sentence_through_porter
+from .queries import *
 
 
 def index(request):
@@ -12,31 +13,41 @@ def index(request):
 
 
 def load_file(request):
+    raw_collection = list()
+    porter_collection = list()
     if request.method == 'POST':
         get_file_name_set = request.POST.getlist('selected_file[]')
         checksum = file_set_generate_md5_checksum(get_file_name_set)
         file_set = Document.objects.filter(checksum=checksum)
         # If exist loading from database, else creating new record
         if file_set.count() > 0:
-            load_result = file_set.get().contents.all()
+            document = file_set.get()
+            raw_collection = get_content_is_raw_by_document(document)
+            porter_collection = get_content_not_raw_by_document(document)
         else:
             content_collection = get_documents_from_file_set(get_file_name_set)
             document = Document.objects.create(checksum=checksum)
-            document.save()
             for content in content_collection:
                 if content[0] is None or content[1] is None:
                     continue
                 if content[0].strip() == '' or content[1].strip() == '':
                     continue
-                saved_content = Content.objects.create(document_id=document, title=content[0], abstract=content[1],
-                                                       is_raw=True)
-                saved_content.save()
-                saved_content1 = Content.objects.create(document_id=document,
-                                                        title=convert_sentence_through_porter(content[0]),
-                                                        abstract=convert_sentence_through_porter(content[1]),
-                                                        is_raw=False)
-                saved_content1.save()
-            print('finish: saved to DB')
-            load_result = document.contents.all()
+                Content.objects.create(document_id=document, title=content[0], abstract=content[1],
+                                       is_raw=True)
 
-    return render(request, 'zipfDistribution/index.html', {'document_list': load_result})
+                Content.objects.create(document_id=document,
+                                       title=convert_sentence_through_porter(content[0]),
+                                       abstract=convert_sentence_through_porter(content[1]),
+                                       is_raw=False)
+
+            print('finish: saved to DB')
+            raw_collection = get_content_is_raw_by_document(document)
+            porter_collection = get_content_not_raw_by_document(document)
+
+    return render(request, 'zipfDistribution/index.html',
+                  {'raw_collection': raw_collection, 'porter_collection': porter_collection})
+
+
+def create_index(request):
+
+    pass

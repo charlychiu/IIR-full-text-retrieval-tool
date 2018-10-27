@@ -14,3 +14,17 @@ class Content(models.Model):
     is_raw = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class RawIndex(models.Model):
+    word = models.CharField(max_length=255)
+    contents = models.ManyToManyField(Content)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class PorterIndex(models.Model):
+    word = models.CharField(max_length=255)
+    contents = models.ManyToManyField(Content)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

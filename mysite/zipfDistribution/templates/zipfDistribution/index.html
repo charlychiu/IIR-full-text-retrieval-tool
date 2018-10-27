@@ -65,6 +65,7 @@
 
             <div class="card">
                 <div class="card-header">Data set
+                    <span class="badge badge-pill badge-danger">{{ raw_collection.count }}</span>
                     <div class="card-header-actions">
                         <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
                            data-target="#dataset" aria-expanded="true">
@@ -76,18 +77,18 @@
                     <table class="table table-responsive-sm table-striped">
                         <thead>
                         <tr>
-                            <th class="w-25">Title</th>
-                            <th class="w-25">Abstract</th>
+                            <th style="width: 10%"></th>
+                            <th style="width: 40%">Title</th>
+                            <th style="width: 50%">Abstract</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for document in document_list %}
-                            {% if document.is_raw == 1 %}
-                                <tr>
-                                    <td>{{ document.title }}</td>
-                                    <td>{{ document.abstract }}</td>
-                                </tr>
-                            {% endif %}
+                        {% for document in raw_collection %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ document.title }}</td>
+                                <td>{{ document.abstract }}</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -96,8 +97,9 @@
 
             <div class="card">
                 <div class="card-header">Porter's algorithm
+                    <span class="badge badge-pill badge-danger">{{ porter_collection.count }}</span>
                     <div class="card-header-actions">
-                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                        <a class="card-header-action btn-minimize" href="" data-toggle="collapse"
                            data-target="#porter" aria-expanded="true">
                             <i class="icon-arrow-up"></i>
                         </a>
@@ -107,18 +109,18 @@
                     <table class="table table-responsive-sm table-striped">
                         <thead>
                         <tr>
-                            <th class="w-25">Title</th>
-                            <th class="w-25">Abstract</th>
+                            <th style="width: 10%"></th>
+                            <th style="width: 40%">Title</th>
+                            <th style="width: 50%">Abstract</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for document in document_list %}
-                            {% if document.is_raw == 0 %}
-                                <tr>
-                                    <td>{{ document.title }}</td>
-                                    <td>{{ document.abstract }}</td>
-                                </tr>
-                            {% endif %}
+                        {% for document in porter_collection %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ document.title }}</td>
+                                <td>{{ document.abstract }}</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -128,7 +130,7 @@
             <div class="card">
                 <div class="card-header">Inverse document frequency
                     <div class="card-header-actions">
-                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                        <a class="card-header-action btn-minimize" href="" data-toggle="collapse"
                            data-target="#idf" aria-expanded="true">
                             <i class="icon-arrow-up"></i>
                         </a>
