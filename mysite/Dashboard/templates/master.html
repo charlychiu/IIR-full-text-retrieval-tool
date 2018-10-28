@@ -30,8 +30,8 @@
     </button>
     <a class="navbar-brand" href="">
         <h2>IR</h2>
-{#        <img class="navbar-brand-full" src="" width="89" height="25" alt="Charly Chiu">#}
-{#        <img class="navbar-brand-minimized" src="" width="30" height="30" alt="CC">#}
+        {#        <img class="navbar-brand-full" src="" width="89" height="25" alt="Charly Chiu">#}
+        {#        <img class="navbar-brand-minimized" src="" width="30" height="30" alt="CC">#}
     </a>
 
 </header>
@@ -50,10 +50,27 @@
                         <i class="nav-icon icon-speedometer"></i> searchEngine
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'zipfDistribution:index' %}">
-                        <i class="nav-icon icon-speedometer"></i> zipfDistribution
-                    </a>
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#">
+                        <i class="nav-icon icon-cursor"></i> zipfDistribution</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'zipfDistribution:index' %}">
+                                <i class="nav-icon icon-speedometer"></i> Index
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'zipfDistribution:chart' %}">
+                                <i class="nav-icon icon-speedometer"></i> Chart
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'zipfDistribution:search' %}">
+                                <i class="nav-icon icon-speedometer"></i> Search
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>

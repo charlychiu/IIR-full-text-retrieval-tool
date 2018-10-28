@@ -39,19 +39,19 @@ def load_file(request):
                     continue
                 if content[0].strip() == '' or content[1].strip() == '':
                     continue
-                Content.objects.create(document_id=document, title=content[0], abstract=content[1],
+                Content.objects.create(document_id=document, title=content[0].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}), abstract=content[1].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}),
                                        is_raw=True)
 
                 Content.objects.create(document_id=document,
-                                       title=convert_sentence_through_porter(content[0]),
-                                       abstract=convert_sentence_through_porter(content[1]),
+                                       title=convert_sentence_through_porter(content[0].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"})),
+                                       abstract=convert_sentence_through_porter(content[1].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"})),
                                        is_raw=False)
 
             print('finish: saved to DB')
             raw_collection = get_content_is_raw_by_document(document)
             porter_collection = get_content_not_raw_by_document(document)
-            # generated_raw_reverted_index(raw_collection)
-            # generated_porter_reverted_index(porter_collection)
+            generated_raw_reverted_index(raw_collection)
+            generated_porter_reverted_index(porter_collection)
 
     return render(request, 'zipfDistribution/index.html',
                   {'raw_collection': raw_collection, 'porter_collection': porter_collection})
@@ -102,5 +102,5 @@ def result_of_search(request, word, search_type):
 
     print(result_list[0].abstract)
 
-    return render(request, 'zipfDistribution/result.html', {'result_list': result_list})
+    return render(request, 'zipfDistribution/result.html', {'result_list': result_list, 'result_count': result_list.count()})
 
