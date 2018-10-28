@@ -28,3 +28,17 @@ class PorterIndex(models.Model):
     contents = models.ManyToManyField(Content)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class RawIndexTwitter(models.Model):
+    word = models.CharField(max_length=255)
+    contents = models.ManyToManyField(Content)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class PorterIndexTwitter(models.Model):
+    word = models.CharField(max_length=255)
+    contents = models.ManyToManyField(Content)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

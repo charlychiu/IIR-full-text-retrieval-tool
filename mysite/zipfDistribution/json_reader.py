@@ -21,8 +21,8 @@ def data_handling(data):
         # print(data[0]['id'])
         for msg in data:
             tmp_list = list()
-            tmp_list.append(msg['ID'])
-            tmp_list.append(msg['Text'])
+            # tmp_list.append(msg['ID'])
+            tmp_list.append(msg['text'])
             collection_list.append(tmp_list)
 
     return collection_list
@@ -36,8 +36,12 @@ def twitter_json_parser(file_path):
 
 if __name__ == "__main__":
     # read_json_file('./Tweet_Json.json')
-    result = twitter_json_parser('../upload/twitter_3.json')
-    print(result)
+    result = twitter_json_parser('../upload/tweet_ebola.json')
+    # print(result)
+    result_list = list()
+    result_list.extend(result)
+    for content in result_list:
+        print(content[0].translate({ord(c): " " for c in "!@#$%^&*()[]{};:,./<>?\|`~-=_+"}))
     # result = zip(*result)
     # print(list(result))
     # print(result[0]['id'])
