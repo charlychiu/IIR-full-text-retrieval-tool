@@ -29,6 +29,8 @@ def load_file(request):
             document = file_set.get()
             raw_collection = get_content_is_raw_by_document(document)
             porter_collection = get_content_not_raw_by_document(document)
+            generated_raw_index_frequency(raw_collection)
+            generated_porter_index_frequency(porter_collection)
             # generated_raw_reverted_index(raw_collection)
             # generated_porter_reverted_index(porter_collection)
             # pass

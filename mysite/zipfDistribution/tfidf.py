@@ -1,6 +1,26 @@
-from .models import RawIndexTwitter,PorterIndexTwitter
+from .models import RawIndexTwitter, PorterIndexTwitter, RawIndex, PorterIndex
 import nltk
 import operator
+
+
+def generated_raw_index_frequency(content_collection):
+    for content in content_collection:
+        sentence = " ".join((content.title, content.abstract))
+        word_collection = str.split(sentence)
+        for word in word_collection:
+            rawIndex = RawIndex.objects.get(word=word)
+            rawIndex.frequency += 1
+            rawIndex.save()
+
+
+def generated_porter_index_frequency(content_collection):
+    for content in content_collection:
+        sentence = " ".join((content.title, content.abstract))
+        word_collection = str.split(sentence)
+        for word in word_collection:
+            porterIndex = PorterIndex.objects.get(word=word)
+            porterIndex.frequency += 1
+            porterIndex.save()
 
 
 def generated_raw_reverted_index(content_collection):

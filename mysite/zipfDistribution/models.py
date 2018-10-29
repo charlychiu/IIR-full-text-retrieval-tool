@@ -19,6 +19,7 @@ class Content(models.Model):
 class RawIndex(models.Model):
     word = models.CharField(max_length=255)
     contents = models.ManyToManyField(Content)
+    frequency = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,6 +27,7 @@ class RawIndex(models.Model):
 class PorterIndex(models.Model):
     word = models.CharField(max_length=255)
     contents = models.ManyToManyField(Content)
+    frequency = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -33,6 +35,7 @@ class PorterIndex(models.Model):
 class RawIndexTwitter(models.Model):
     word = models.CharField(max_length=255)
     contents = models.ManyToManyField(Content)
+    frequency = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -40,5 +43,6 @@ class RawIndexTwitter(models.Model):
 class PorterIndexTwitter(models.Model):
     word = models.CharField(max_length=255)
     contents = models.ManyToManyField(Content)
+    frequency = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
