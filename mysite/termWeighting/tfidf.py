@@ -1,16 +1,27 @@
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 
+def combine_title_and_abstract(documents):
+    result_collection = list()
+    for doc in documents:
+        result_collection.append(doc[0] + doc[1])
+    return result_collection
+
+
 def tfidf_with_norm(corpus):
     vectorizer = CountVectorizer()
     transformer = TfidfTransformer()
     tfidf = transformer.fit_transform(vectorizer.fit_transform(corpus))
     word = vectorizer.get_feature_names()
     weight = tfidf.toarray()
+    result_collection = list()
     for i in range(len(weight)):
+        tmp_collection = list()
         for j in range(len(word)):
-            print(word[j], weight[i][j])
-
+            tmp_collection.append([word[j], weight[i][j]])
+        result_collection.append(tmp_collection)
+            # print(word[j], weight[i][j])
+    return result_collection
 
 def tfidf_without_norm(corpus):
     vectorizer = CountVectorizer()
