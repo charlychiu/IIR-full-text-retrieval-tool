@@ -29,8 +29,8 @@ def load_file(request):
             document = file_set.get()
             raw_collection = get_content_is_raw_by_document(document)
             porter_collection = get_content_not_raw_by_document(document)
-            generated_raw_index_frequency(raw_collection)
-            generated_porter_index_frequency(porter_collection)
+            # generated_raw_index_frequency(raw_collection)
+            # generated_porter_index_frequency(porter_collection)
             # generated_raw_reverted_index(raw_collection)
             # generated_porter_reverted_index(porter_collection)
             # pass
@@ -64,17 +64,24 @@ def load_file(request):
 
 def zipf_chart(request):
     # discussion only appear more than 300 times
-    rawIndex = RawIndex.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
-    result = {}
-    for word in rawIndex:
-        result[word.word] = word.frq_count
+    # rawIndex = RawIndex.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
+    # result = {}
+    # for word in rawIndex:
+    #     result[word.word] = word.frq_count
+    file_set = Document.objects.get(pk=1)
+    raw_collection = get_content_is_raw_by_document(file_set)
+    result = generated_raw_index_frequency(raw_collection)
+    result = dict((k, v) for k, v in result.items() if v >= 300)
     result = sorted(result.items(), key=operator.itemgetter(1))
     result.reverse()
 
-    porterIndex = PorterIndex.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
-    result1 = {}
-    for word in porterIndex:
-        result1[word.word] = word.frq_count
+    # porterIndex = PorterIndex.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
+    # result1 = {}
+    # for word in porterIndex:
+    #     result1[word.word] = word.frq_count
+    porter_collection = get_content_not_raw_by_document(file_set)
+    result1 = generated_porter_index_frequency(porter_collection)
+    result1 = dict((k, v) for k, v in result1.items() if v >= 300)
     result1 = sorted(result1.items(), key=operator.itemgetter(1))
     result1.reverse()
 
@@ -84,17 +91,24 @@ def zipf_chart(request):
 
 
 def zipf_chart_twitter(request):
-    rawIndex = RawIndexTwitter.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
-    result = {}
-    for word in rawIndex:
-        result[word.word] = word.frq_count
+    # rawIndex = RawIndexTwitter.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
+    # result = {}
+    # for word in rawIndex:
+    #     result[word.word] = word.frq_count
+    file_set = Document.objects.get(pk=3)
+    raw_collection = get_content_is_raw_by_document(file_set)
+    result = generated_raw_index_frequency(raw_collection)
+    result = dict((k, v) for k, v in result.items() if v >= 300)
     result = sorted(result.items(), key=operator.itemgetter(1))
     result.reverse()
 
-    porterIndex = PorterIndexTwitter.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
-    result1 = {}
-    for word in porterIndex:
-        result1[word.word] = word.frq_count
+    # porterIndex = PorterIndexTwitter.objects.annotate(frq_count=Count('contents')).filter(frq_count__gt=300)
+    # result1 = {}
+    # for word in porterIndex:
+    #     result1[word.word] = word.frq_count
+    porter_collection = get_content_not_raw_by_document(file_set)
+    result1 = generated_porter_index_frequency(porter_collection)
+    result1 = dict((k, v) for k, v in result1.items() if v >= 300)
     result1 = sorted(result1.items(), key=operator.itemgetter(1))
     result1.reverse()
     return render(request, 'zipfDistribution/chart.html',
@@ -127,4 +141,4 @@ def result_of_search(request, word, search_type):
     print(result_list[0].abstract)
 
     return render(request, 'zipfDistribution/result.html',
-                  {'result_list': result_list, 'result_count': result_list.count()})
+                  {'result_list': result_list, 'result_count': result_list.count(), 'keyword': word})

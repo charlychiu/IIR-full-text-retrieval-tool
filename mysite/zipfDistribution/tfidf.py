@@ -4,23 +4,37 @@ import operator
 
 
 def generated_raw_index_frequency(content_collection):
+    tmp_dict = {}
     for content in content_collection:
         sentence = " ".join((content.title, content.abstract))
         word_collection = str.split(sentence)
         for word in word_collection:
-            rawIndex = RawIndex.objects.get(word=word)
-            rawIndex.frequency += 1
-            rawIndex.save()
+            word_count = tmp_dict.get(word, 0) + 1
+            tmp_dict[word] = word_count
+    print('finish count')
+    # print(tmp_dict['and'])
+    return tmp_dict
+    # for word, frq in tmp_dict.items():
+    #     rawIndex = RawIndex.objects.get(word=word)
+    #     rawIndex.frequency = frq
+    #     rawIndex.save()
 
 
 def generated_porter_index_frequency(content_collection):
+    tmp_dict = {}
     for content in content_collection:
         sentence = " ".join((content.title, content.abstract))
         word_collection = str.split(sentence)
         for word in word_collection:
-            porterIndex = PorterIndex.objects.get(word=word)
-            porterIndex.frequency += 1
-            porterIndex.save()
+            word_count = tmp_dict.get(word, 0) + 1
+            tmp_dict[word] = word_count
+    print('finish count')
+    # print(tmp_dict['and'])
+    return tmp_dict
+    # for word, frq in tmp_dict.items():
+    #     porterIndex = PorterIndex.objects.get(word=word)
+    #     porterIndex.frequency = frq
+    #     porterIndex.save()
 
 
 def generated_raw_reverted_index(content_collection):

@@ -1,4 +1,5 @@
 {% extends "master.html" %}
+{% load filters %}
 {% block title %}zipfDistribution - result{% endblock %}
 {% block content %}
     <!-- Breadcrumb-->
@@ -29,8 +30,28 @@
                         {% for result in result_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ result.title }}</td>
-                                <td>{{ result.abstract }}</td>
+                                <td>
+                                    {% with result.title|split:" " as words %}
+                                        {% for word in words %}
+                                            {% if word|lower == keyword|lower %}
+                                                <strong>{{ word }}</strong>
+                                            {% else %}
+                                                {{ word }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endwith %}
+                                </td>
+                                <td>
+                                    {% with result.abstract|split:" " as words %}
+                                        {% for word in words %}
+                                            {% if word|lower == keyword|lower %}
+                                                <strong>{{ word }}</strong>
+                                            {% else %}
+                                                {{ word }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endwith %}
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
