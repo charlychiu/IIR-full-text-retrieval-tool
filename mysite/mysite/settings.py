@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Dashboard',
     'searchEngine',
-    'zipfDistribution'
+    'zipfDistribution',
+    'termWeighting'
 ]
 
 MIDDLEWARE = [

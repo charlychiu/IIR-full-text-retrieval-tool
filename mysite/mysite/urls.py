@@ -20,5 +20,6 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', include('Dashboard.urls')),
     path('searchEngine/', include('searchEngine.urls')),
-    path('zipfDistribution/', include('zipfDistribution.urls'))
+    path('zipfDistribution/', include('zipfDistribution.urls')),
+    path('termWeighting/', include('termWeighting.urls'))
 ]

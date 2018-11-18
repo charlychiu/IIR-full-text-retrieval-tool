@@ -1,0 +1,82 @@
+{% extends "master.html" %}
+{% block title %}termWeighting{% endblock %}
+{% block content %}
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">termWeighting</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="{% url 'searchEngine:clean_pkl_cache' %}">
+                    <i class="fa fa-eraser"></i>  Clean Dict Cache</a>
+                <a class="btn" href="{% url 'searchEngine:clean_upload_cache' %}">
+                    <i class="fa fa-eraser"></i>  Clean Upload Cache</a>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> System Log
+                </div>
+                <div class="card-body">
+                    <div id="accordion" role="tablist">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo"
+                                       aria-expanded="false" aria-controls="collapseTwo">Local variable</a>
+                                </h5>
+                            </div>
+                            <div class="collapse" id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo"
+                                 data-parent="#accordion" style="">
+                                <div class="card-body">
+                                    {{ context }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if request.path != '/termWeighting/load' %}
+
+                <div class="card">
+                    <form action="{% url 'termWeighting:load' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="select1" name="selected_file[]" multiple>
+                                        {% for file in file_list %}
+                                            <option value="{{ file }}">{{ file }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+                                Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                        </div>
+                    </form>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#select1').select2();
+        });
+    </script>
+{% endblock %}
