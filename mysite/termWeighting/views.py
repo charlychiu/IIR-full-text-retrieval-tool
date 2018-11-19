@@ -20,9 +20,20 @@ def load_file(request):
         pkl_id = context[-2]
         input_data = combine_title_and_abstract(context[0])
         context = tfidf_with_norm(input_data)
+        context_sublinear = tfidf_with_sublinear(input_data)
+        context_without_norm = tfidf_without_norm(input_data)
+        # print(input_data)
+        sentence_set_processed = cut_document_set_to_sentence(input_data)
+        # print(sentence_set_processed)
+        context_sentence = tfidf_with_norm(sentence_set_processed)
+
+
         # print(context[1])  # each index present each doc and its tfidf
         return render(request, 'termWeighting/index.html',
-                      {'file_list': [get_file_name], 'context': context, 'pkl_id': pkl_id})
+                      {'file_list': [get_file_name], 'context': context, 'pkl_id': pkl_id,
+                       'context_sublinear': context_sublinear,
+                       'context_without_norm': context_without_norm,
+                       'context_sentence': context_sentence})
 
 
 def preview_document(request, pkl_id, doc_index):

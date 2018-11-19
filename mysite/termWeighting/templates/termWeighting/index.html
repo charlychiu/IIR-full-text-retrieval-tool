@@ -105,6 +105,109 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Result - with sublinear
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset1" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="dataset1">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eachDoc in context_sublinear %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'termWeighting:preview_document' pkl_id=pkl_id doc_index=forloop.counter %}"> {{ forloop.counter }} </a>
+                                </td>
+
+                                {% for docContent in eachDoc %}
+                                    <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>
+                                {% endfor %}
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Result - without norm
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset2" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="dataset2">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eachDoc in context_without_norm %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'termWeighting:preview_document' pkl_id=pkl_id doc_index=forloop.counter %}"> {{ forloop.counter }} </a>
+                                </td>
+
+                                {% for docContent in eachDoc %}
+                                    <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>
+                                {% endfor %}
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Result - sentence based TF-IDF
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset3" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="dataset3">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eachDoc in context_sentence %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                {% for docContent in eachDoc %}
+                                    <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
