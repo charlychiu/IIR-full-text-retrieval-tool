@@ -28,7 +28,7 @@ def load_file(request):
         context_sentence = tfidf_with_norm(sentence_set_processed)
 
         search_result_collection = list()
-        if request.POST['search_keyword'] is not None:
+        if request.POST['search_keyword'] is not None and request.POST['search_keyword'] != '':
             search_result_collection = keyword_search_for_tfidf_ranking(input_data, request.POST['search_keyword'])
             # print(search_result_collection)
             search_result_collection.sort(key=lambda x: x[1], reverse=True)
