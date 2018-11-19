@@ -57,6 +57,18 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <button class="btn btn-primary" type="button"><i
+                                            class="fa fa-search"></i> Search</button>
+                                </span>
+                                        <input class="form-control" id="input1-group2" type="text" name="search_keyword"
+                                               placeholder="Keyword">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
@@ -64,6 +76,8 @@
                             </button>
                             <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
                         </div>
+
+
                     </form>
                 </div>
 
@@ -208,6 +222,37 @@
                     </table>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Result - keyword search ranking
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset4" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="dataset4">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>weight</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eachDoc in search_result_collection %}
+                            <tr>
+                                <td><a href="{% url 'termWeighting:preview_document_index' pkl_id=pkl_id doc_index=eachDoc.0 %}">{{ eachDoc.0 }}</a></td>
+                                <td>{{ eachDoc.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}
