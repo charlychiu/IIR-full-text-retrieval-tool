@@ -18,8 +18,10 @@ def tfidf_with_norm(corpus):
     for i in range(len(weight)):
         tmp_collection = list()
         for j in range(len(word)):
-            tmp_collection.append([word[j], weight[i][j]])
-        result_collection.append(tmp_collection)
+            if weight[i][j] != 0.0:
+                tmp_collection.append([word[j], weight[i][j]])
+        tmp_collection.sort(key=lambda x: x[1], reverse=True)
+        result_collection.append(tmp_collection[:7])
             # print(word[j], weight[i][j])
     return result_collection
 

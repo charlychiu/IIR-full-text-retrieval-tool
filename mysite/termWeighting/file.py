@@ -63,6 +63,7 @@ def get_file_info(file_list):  # [[character, word, sentence], dict{}]
         file_info_list, pkl_name = load_file_info_from_tmp_pkl(file_list)
         file_info_list.append(pkl_name)
         file_info_list.append("load from pkl")
+        print("load from pkl")
         return file_info_list
     else:
         for file in file_list:
@@ -84,5 +85,6 @@ def get_file_info(file_list):  # [[character, word, sentence], dict{}]
         pkl_name = save_file_info_to_tmp_pkl(file_list, file_info_list) or ""
         file_info_list.append(pkl_name)
         file_info_list.append("save to pkl")
+        print("save to pkl")
 
         return file_info_list

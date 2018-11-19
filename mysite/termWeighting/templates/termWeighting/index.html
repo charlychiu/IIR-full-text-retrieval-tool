@@ -69,6 +69,34 @@
 
             {% endif %}
 
+            <div class="card">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eachDoc in context %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+
+                                {% for docContent in eachDoc %}
+                                    <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>
+                                {% endfor %}
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}

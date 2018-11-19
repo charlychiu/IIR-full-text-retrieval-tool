@@ -19,4 +19,5 @@ def load_file(request):
         context = get_file_info(get_file_name)
         input_data = combine_title_and_abstract(context[0])
         context = tfidf_with_norm(input_data)
-    return render(request, 'termWeighting/index.html', {'file_list': [get_file_name], 'context': context})
+        print(context[1])  # each index present each doc and its tfidf
+    return render(request, 'termWeighting/index.html', {'file_list': [get_file_name], 'context': context })
