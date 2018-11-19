@@ -1,0 +1,27 @@
+{% extends "master.html" %}
+{% block title %}preview{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Abstract</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ result_doc.0 }}</td>
+                                <td>{{ result_doc.1 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

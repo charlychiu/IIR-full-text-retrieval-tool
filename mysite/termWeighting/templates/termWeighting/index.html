@@ -71,9 +71,15 @@
 
             <div class="card">
                 <div class="card-header">
-
+                    <i class="fa fa-align-justify"></i> Result - default
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body collapse show" id="dataset">
                     <table class="table table-bordered table-dark">
                         <thead>
                         <tr>
@@ -84,7 +90,9 @@
                         <tbody>
                         {% for eachDoc in context %}
                             <tr>
-                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <a href="{% url 'termWeighting:preview_document' pkl_id=pkl_id doc_index=forloop.counter %}"> {{ forloop.counter }} </a>
+                                </td>
 
                                 {% for docContent in eachDoc %}
                                     <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>

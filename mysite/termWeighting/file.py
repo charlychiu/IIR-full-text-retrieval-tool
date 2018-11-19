@@ -88,3 +88,10 @@ def get_file_info(file_list):  # [[character, word, sentence], dict{}]
         print("save to pkl")
 
         return file_info_list
+
+
+def retrieval_from_tmp_pkl(pkl_id, doc_index):
+    fh = open("tmp/" + str(pkl_id) + ".pkl", 'rb')
+    file_info_list = pickle.load(fh)
+    print(file_info_list[0][int(doc_index)-1])
+    return file_info_list[0][int(doc_index)-1]
