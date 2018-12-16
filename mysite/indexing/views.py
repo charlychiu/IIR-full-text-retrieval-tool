@@ -3,7 +3,7 @@ from .file import *
 from .models import *
 import re
 import math
-
+import time
 
 # Create your views here.
 
@@ -43,6 +43,20 @@ def chunks(arr, m):
     return [arr[i:i + n] for i in range(0, len(arr), n)]
 
 
+# def bsbi_word2hash(document_list):
+#     word_hash_table_mapping = dict()
+#     for doc in document_list:
+#         word_set = doc[1].split()
+#         for word in word_set:
+#             word_hash_table_mapping[hash(word)] = word
+#
+#     for k, v in word_hash_table_mapping.items():
+#         # temp_dict[k] = sorted(v)
+#         bsbi_map = BSBI_Map(hash=k, word=v)
+#         bsbi_map.save()
+#         print('save to db')
+
+
 def bsbi_word2hash_indexing(document_list):
     word_hash_table_mapping = dict()
     for doc in document_list:
@@ -51,13 +65,43 @@ def bsbi_word2hash_indexing(document_list):
             word_hash_table_mapping[hash(word)] = word
             bsbi_model = BSBI(word=hash(word), documents=doc[0])
             bsbi_model.save()
+
+    # Do merge
+    bsbi_merge()
+
+    for k, v in word_hash_table_mapping.items():
+        bsbi_map = BSBI_Map(hash=k, word=v)
+        bsbi_map.save()
+        print('save to db')
     # print(word_hash_table_mapping)
     return word_hash_table_mapping
 
 
+def bsbi_merge():
+    bsbi_raw = BSBI.objects.all()
+    temp_dict = dict()
+    for record in bsbi_raw:
+        set_pool = temp_dict.get(record.word, set())
+        set_pool.add(record.documents)
+        temp_dict[record.word] = set_pool
+    for k, v in temp_dict.items():
+        # temp_dict[k] = sorted(v)
+        bsbi = BSBI_Merge(word=k, documents=str(sorted(v)))
+        bsbi.save()
+        # print('save to db')
+    # print(temp_dict)
+
+
 def bsbi(request):
+    # bsbi_merge()
+    start = time.time()
     document_set = get_doc_list()
-    chunk_doc_set = chunks(document_set, 2)
+    bsbi_word2hash_indexing(document_set)  # 108.84743237495422
+    end = time.time()
+    print(end - start)
+    # bsbi_word2hash(document_set)
+    # chunk_doc_set = chunks(document_set, 2)
+
     # a = bsbi_word2hash_indexing(chunk_doc_set[1])
     # print(a)
     # print(len(part1_doc_set))
