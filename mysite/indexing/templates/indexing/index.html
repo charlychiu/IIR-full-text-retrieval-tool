@@ -1,0 +1,112 @@
+{% extends "master.html" %}
+{% block title %}indexing{% endblock %}
+{% block content %}
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">indexing</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="{% url 'searchEngine:clean_pkl_cache' %}">
+                    <i class="fa fa-eraser"></i>  Clean Dict Cache</a>
+                <a class="btn" href="{% url 'searchEngine:clean_upload_cache' %}">
+                    <i class="fa fa-eraser"></i>  Clean Upload Cache</a>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> System Log
+                </div>
+                <div class="card-body">
+                    <div id="accordion" role="tablist">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo"
+                                       aria-expanded="false" aria-controls="collapseTwo">Local variable</a>
+                                </h5>
+                            </div>
+                            <div class="collapse" id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo"
+                                 data-parent="#accordion" style="">
+                                <div class="card-body">
+                                    {{ context }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if request.path != '/indexing/load' %}
+
+                <div class="card">
+                    <form action="{% url 'indexing:load' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="select1" name="selected_file[]" multiple>
+                                        {% for file in file_list %}
+                                            <option value="{{ file }}">{{ file }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
+                                Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Result
+                    <div class="card-header-actions">
+                        <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                           data-target="#dataset3" aria-expanded="true">
+                            <i class="icon-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body collapse show" id="dataset3">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th width="10px">index</th>
+                            <th>content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eachDoc in context_sentence %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                {% for docContent in eachDoc %}
+                                    <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#select1').select2();
+        });
+    </script>
+{% endblock %}

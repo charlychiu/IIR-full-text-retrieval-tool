@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('Dashboard.urls')),
     path('searchEngine/', include('searchEngine.urls')),
     path('zipfDistribution/', include('zipfDistribution.urls')),
-    path('termWeighting/', include('termWeighting.urls'))
+    path('termWeighting/', include('termWeighting.urls')),
+    path('indexing/', include('indexing.urls'))
 ]

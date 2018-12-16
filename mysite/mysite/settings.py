@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'Dashboard',
     'searchEngine',
     'zipfDistribution',
-    'termWeighting'
+    'termWeighting',
+    'indexing'
 ]
 
 MIDDLEWARE = [
