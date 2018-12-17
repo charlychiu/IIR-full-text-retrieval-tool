@@ -41,33 +41,30 @@
                 </div>
             </div>
 
-            {% if request.path != '/indexing/load' %}
-
-                <div class="card">
-                    <form action="{% url 'indexing:load' %}" method="post">
+            <div class="card">
+                <div class="card-header">Result</div>
+                <div class="card-body">
+                    <form action="{% url 'indexing:search_keyword' %}"
+                          method="post" target="_blank">
                         {% csrf_token %}
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="select1">Select file to read</label>
-                                <div class="col-md-9">
-                                    <select class="form-control" id="select1" name="selected_file[]" multiple>
-                                        {% for file in file_list %}
-                                            <option value="{{ file }}">{{ file }}</option>
-                                        {% endfor %}
-                                    </select>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <button class="btn btn-primary" type="submit"><i
+                                            class="fa fa-search"></i> Search</button>
+                                </span>
+                                    <input class="form-control" id="input1-group2" type="text" name="search_keyword"
+                                           placeholder="Keyword">
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i>
-                                Submit
-                            </button>
-                            <button class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i> Reset</button>
-                        </div>
                     </form>
                 </div>
+            </div>
 
-                <div class="card">
+
+            <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Result
                     <div class="card-header-actions">
@@ -82,23 +79,22 @@
                         <thead>
                         <tr>
                             <th width="10px">index</th>
+                            <th>docID</th>
                             <th>content</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for eachDoc in context_sentence %}
+                        {% for eachDoc in context %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                {% for docContent in eachDoc %}
-                                    <td><h3>{{ docContent.0 }}</h3> / {{ docContent.1 }}</td>
-                                {% endfor %}
+                                <td>{{ eachDoc.0 }}</td>
+                                <td>{{ eachDoc.2 }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}

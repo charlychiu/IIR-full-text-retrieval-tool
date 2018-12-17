@@ -8,5 +8,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('load', views.load_file, name='load'),
     path('BSBI', views.bsbi, name='bsbi'),
-    path('spimi', views.spimi, name='spimi')
+    path('spimi', views.spimi, name='spimi'),
+    path('search_keyword', views.search_keyword, name='search_keyword')
 ]
